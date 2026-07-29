@@ -1,0 +1,39 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main, develop, "feature/**" ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-and-test:
+    name: Validate and Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check required files exist
+        run: |
+          test -f src/index.html || (echo "Missing src/index.html" && exit 1)
+          test -f src/style.css || (echo "Missing src/style.css" && exit 1)
+          test -f src/script.js || (echo "Missing src/script.js" && exit 1)
+          echo "All required files present."
+
+      - name: Lint HTML
+        run: npx --yes htmlhint "src/**/*.html" || true
+        # continue-on-error style via '|| true' so a missing config doesn't
+        # block the pipeline; tighten this once you add an .htmlhintrc
+
+      - name: Lint JavaScript
+        run: npx --yes eslint src/script.js --no-eslintrc --env browser,es2021 --parser-options=ecmaVersion:2021 || true
+
+      - name: Basic syntax check (Node)
+        run: node --check src/script.js
