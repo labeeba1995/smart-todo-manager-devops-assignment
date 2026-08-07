@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Smart Todo Manager - A modern, responsive web interface for tracking tasks and boosting productivity.">
+  <title>Smart Todo Manager</title>
+  <!-- Google Fonts for modern typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background decorative ambient lighting -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <div class="app-wrapper">
+    <!-- Application Header -->
+    <header class="app-header">
+      <div class="logo-container">
+        <div class="logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"></path>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1 class="app-title">Smart Todo Manager</h1>
+          <span class="app-version-tag">DevOps UI Edition</span>
+        </div>
+      </div>
+      <p class="app-subtitle">Streamline your workflow, organize daily priorities, and accomplish goals effortlessly.</p>
+    </header>
+
+    <!-- Main Todo Application Card -->
+    <main class="todo-card">
+      
+      <!-- Input Section for adding new tasks -->
+      <!-- 
+        JS INTEGRATION NOTE FOR BACKEND/DEV AGENT:
+        Connect form submission to JavaScript via event listener on #todo-form or click handler on #add-task-btn.
+      -->
+      <section class="task-input-section" aria-label="Add new task section">
+        <form id="todo-form" class="todo-form" action="#" method="POST" onclick="event.preventDefault()">
+          <div class="input-wrapper">
+            <span class="input-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="16"></line>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
+              </svg>
+            </span>
+            <input 
+              type="text" 
+              id="task-input" 
+              class="task-input" 
+              placeholder="What needs to be done today?..." 
+              autocomplete="off"
+              required
+            >
+          </div>
+          <button type="submit" id="add-task-btn" class="btn btn-add">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Add Task</span>
+          </button>
+        </form>
+      </section>
+
+      <!-- Filter Controls Section -->
+      <!--
+        JS INTEGRATION NOTE FOR BACKEND/DEV AGENT:
+        Attach click listeners to buttons with data-filter attribute to handle task filtering.
+      -->
+      <section class="controls-section" aria-label="Task filter controls">
+        <div class="filter-buttons-group" id="filter-buttons">
+          <button type="button" class="filter-btn active" id="filter-all" data-filter="all">
+            <span>All</span>
+            <span class="filter-badge" id="count-all">4</span>
+          </button>
+          <button type="button" class="filter-btn" id="filter-active" data-filter="active">
+            <span>Active</span>
+            <span class="filter-badge" id="count-active">3</span>
+          </button>
+          <button type="button" class="filter-btn" id="filter-completed" data-filter="completed">
+            <span>Completed</span>
+            <span class="filter-badge" id="count-completed">1</span>
+          </button>
+        </div>
+
+        <div class="status-chip">
+          <span class="status-dot"></span>
+          <span class="status-label">Frontend Ready</span>
+        </div>
+      </section>
+
+      <!-- Task List Section -->
+      <!--
+        JS INTEGRATION NOTE FOR BACKEND/DEV AGENT:
+        Render dynamic tasks inside #task-list container. 
+        Each item includes a unique data-task-id, checkbox input, title, priority tag, and delete button.
+      -->
+      <section class="task-list-section" aria-label="Tasks list">
+        <ul id="task-list" class="task-list">
+          
+          <!-- Sample Task Item 1: Active / High Priority -->
+          <li class="task-card priority-high" data-task-id="1">
+            <div class="task-content">
+              <label class="custom-checkbox-wrapper" for="task-checkbox-1">
+                <input type="checkbox" id="task-checkbox-1" class="task-checkbox" aria-label="Mark task as complete">
+                <span class="checkbox-custom">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </span>
+              </label>
+              <div class="task-details">
+                <span class="task-title">Setup CI/CD deployment workflow for DevOps assignment</span>
+                <div class="task-meta">
+                  <span class="tag tag-priority-high">High Priority</span>
+                  <span class="tag tag-category">DevOps</span>
+                  <span class="due-date">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    Due Today
+                  </span>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn-delete" id="delete-btn-1" data-task-id="1" aria-label="Delete task">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+            </button>
+          </li>
+
+          <!-- Sample Task Item 2: Active / Medium Priority -->
+          <li class="task-card priority-medium" data-task-id="2">
+            <div class="task-content">
+              <label class="custom-checkbox-wrapper" for="task-checkbox-2">
+                <input type="checkbox" id="task-checkbox-2" class="task-checkbox" aria-label="Mark task as complete">
+                <span class="checkbox-custom">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </span>
+              </label>
+              <div class="task-details">
+                <span class="task-title">Review and approve team pull requests on feature/frontend-ui</span>
+                <div class="task-meta">
+                  <span class="tag tag-priority-medium">Medium Priority</span>
+                  <span class="tag tag-category">Git Workflow</span>
+                  <span class="due-date">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    Tomorrow
+                  </span>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn-delete" id="delete-btn-2" data-task-id="2" aria-label="Delete task">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+            </button>
+          </li>
+
+          <!-- Sample Task Item 3: Active / Normal Priority -->
+          <li class="task-card priority-low" data-task-id="3">
+            <div class="task-content">
+              <label class="custom-checkbox-wrapper" for="task-checkbox-3">
+                <input type="checkbox" id="task-checkbox-3" class="task-checkbox" aria-label="Mark task as complete">
+                <span class="checkbox-custom">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </span>
+              </label>
+              <div class="task-details">
+                <span class="task-title">Prepare documentation for university submission</span>
+                <div class="task-meta">
+                  <span class="tag tag-priority-low">Normal Priority</span>
+                  <span class="tag tag-category">Docs</span>
+                  <span class="due-date">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    Fri, Aug 1
+                  </span>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn-delete" id="delete-btn-3" data-task-id="3" aria-label="Delete task">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+            </button>
+          </li>
+
+          <!-- Sample Task Item 4: Completed -->
+          <li class="task-card task-completed" data-task-id="4">
+            <div class="task-content">
+              <label class="custom-checkbox-wrapper" for="task-checkbox-4">
+                <input type="checkbox" id="task-checkbox-4" class="task-checkbox" checked aria-label="Mark task as complete">
+                <span class="checkbox-custom">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </span>
+              </label>
+              <div class="task-details">
+                <span class="task-title">Design HTML5 and CSS3 user interface component</span>
+                <div class="task-meta">
+                  <span class="tag tag-completed">Completed</span>
+                  <span class="tag tag-category">UI Design</span>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn-delete" id="delete-btn-4" data-task-id="4" aria-label="Delete task">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                <line x1="10" y1="11" x2="10" y2="17"></line>
+                <line x1="14" y1="11" x2="14" y2="17"></line>
+              </svg>
+            </button>
+          </li>
+
+        </ul>
+      </section>
+
+      <!-- App Footer Section with Task Counter and Actions -->
+      <!--
+        JS INTEGRATION NOTE FOR BACKEND/DEV AGENT:
+        Update #task-counter inner text dynamically as tasks are checked/added/deleted.
+        Add event listener to #clear-completed-btn to clear finished items.
+      -->
+      <footer class="todo-footer">
+        <div class="counter-container">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          <span id="task-counter" class="task-counter">
+            <strong id="remaining-count">3</strong> Tasks Remaining
+          </span>
+        </div>
+
+        <div class="footer-actions">
+          <button type="button" id="clear-completed-btn" class="btn-clear">
+            Clear Completed
+          </button>
+        </div>
+      </footer>
+
+    </main>
+
+    <!-- Page Footer with credits -->
+    <footer class="app-page-footer">
+      <p>Smart Todo Manager &bull; Built for DevOps & Git Collaboration Project</p>
+    </footer>
+
+  </div>
+       <script src="script.js"></script> 
+</body>
+</html>
